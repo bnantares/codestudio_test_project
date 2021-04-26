@@ -1,0 +1,62 @@
+{% load static homepage_tags %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+	<meta name="keywords" content="{{ homepage.keywords }}">
+	<meta name="description" content="{{ homepage.description }}">
+    <title>{{ homepage.title }}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@400;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'working_app/assets/css/swiper-bundle.min.css' %}">
+	<link rel="stylesheet" href="{% static 'working_app/assets/css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <h1>{{ homepage.slide_photo_heading_text }}</h1>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% if homepage.homepage_image %}
+                    {% for img in homepage.homepage_image.all %}
+                        <div class="swiper-slide"><img src="{{ img.image.url }}" alt=""></div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div class="intro-text">
+                {{ homepage.slide_photo_bottom_text|linebreaks }}
+            </div>
+            <div class="products-list">
+                <h2>{{ homepage.product_heading_text }}</h2>
+                <ul>
+                    {% if products %}
+                    {% for product in products %}
+                    <li><a href="{% url 'product_detail_url' product.slug %}">{{ product.name }}</a></li>
+                    <!-- <li><a href="product.html">Продукт 2</a></li>
+                    <li><a href="product.html">Продукт 3</a></li>
+                    <li><a href="product.html">Продукт 4</a></li>
+                    <li><a href="product.html">Продукт 5</a></li> -->
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div id="map" data-latitude="{{ homepage.map_latitude|comma_replacer }}" data-longitude="{{ homepage.map_longitude|comma_replacer }}"></div>
+            <h2>{{ homepage.feedback_form_title }}</h2>
+            <form id="form" method="POST">
+                {% csrf_token %}
+                {{ form.name }}
+                {{ form.email.errors }}
+                {{ form.email }}
+                <input type="submit" value="Отправить" class="button" onclick="event.preventDefault();onSubmitEvent()">
+            </form>
+        </div>
+    </div>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=28ba27e6-8179-45dd-8a90-a542e1883e67" type="text/javascript"></script>
+	<script src="{% static 'working_app/assets/js/swiper-bundle.min.js' %}"></script>
+	<script src="{% static 'working_app/assets/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+	<meta name="keywords" content="{{ product.keywords }}">
+	<meta name="description" content="{{ product.description }}">
+    <title>{{ product.title }}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Piazzolla:wght@400;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'working_app/assets/css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <a href="/" class="go-back">На главную</a>
+            <h1>{{ product.name }}</h1>
+            <img src="{{ product.image.url }}" alt="Какой-то продукт" class="product-image">
+            <div class="product-info">
+                <div class="product-info-item">
+                    <h2>{{ product.heading1 }}</h2>
+                    <ul>
+                        {{ product.text1|safe }}
+                    </ul>
+                </div>
+                <div class="product-info-item">
+                    <h2>{{ product.heading2 }}</h2>
+                    <ul>
+                        {{ product.text2|safe }}
+                    </ul>
+                </div>
+                <div class="product-info-item">
+                    <h2>{{ product.heading3 }}</h2>
+                    <ul>
+                        {{ product.text3|safe }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
